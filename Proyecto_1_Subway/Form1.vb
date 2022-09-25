@@ -1,5 +1,10 @@
-﻿Public Class Form1
+﻿
+Public Class Form1
+
+
     Dim arrlist As ArrayList = New ArrayList()
+
+
 
     Private Sub CheckedListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox1.SelectedIndexChanged
         Solo_un_valor(CheckedListBox1)
@@ -8,8 +13,8 @@
 
         text_comandos()
 
-    End Sub
 
+    End Sub
 
     Private Sub CheckedListBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox2.SelectedIndexChanged
         Solo_un_valor(CheckedListBox2)
@@ -17,6 +22,7 @@
         Cadena_de_comados(CheckedListBox2, 2)
 
         text_comandos()
+
     End Sub
     Private Sub CheckedListBox3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox3.SelectedIndexChanged
         Cadena_de_comados(CheckedListBox3, 3)
@@ -107,17 +113,36 @@
         End Select
 
     End Function
+    Function Made_hash(cadena As String, tabla As Integer)
+        Dim longitud As Integer
+        Dim suma As Integer
+
+        longitud = Len(cadena)
+        suma = 0
+        For indice As Integer = 0 To longitud
+
+
+        Next
+
+        Return suma Mod tabla
+    End Function
 
     Function text_comandos()
         Dim strings As String
         strings = ""
-        TextBox1.Text = arrlist.Item(0) & vbCrLf
+
+        TextBox1.Text = arrlist.Item(0).GetHashCode() Mod 7 & vbCrLf
+        ''TextBox1.Text += Made_hash(arrlist.Item(0), 4) & vbCrLf
         For Indice As Integer = 1 To arrlist.Count - 1
 
-            TextBox1.Text += arrlist.Item(Indice) & vbCrLf
+            TextBox1.Text += arrlist.Item(Indice).GetHashCode() Mod 4 & vbCrLf
 
         Next Indice
     End Function
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        iniciaizar_tablas()
 
+        Form2.Show()
+    End Sub
 End Class
